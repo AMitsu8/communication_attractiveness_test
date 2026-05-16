@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="googlebot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="bingbot" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'; connect-src 'none'">
+  <title>魅力度テスト</title>
+  <style>
+    :root {
+      --bg: #f5f7f6;
+      --paper: #ffffff;
+      --paper-soft: #f9fbfa;
+      --ink: #1d2428;
+      --sub: #56636b;
+      --muted: #748087;
+      --line: #dfe7e4;
+      --line-strong: #c7d2ce;
+      --green: #256b5a;
+      --green-soft: #e8f3ef;
+      --blue: #315e8b;
+      --blue-soft: #e8eff7;
+      --amber: #a66d1f;
+      --amber-soft: #fbf0dc;
+      --red: #a24a44;
+      --red-soft: #f8e8e6;
+      --shadow: 0 14px 34px rgba(29, 36, 40, 0.08);
+      --shadow-soft: 0 8px 18px rgba(29, 36, 40, 0.06);
+      --radius: 20px;
+      --radius-sm: 12px;
+      --max: 920px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(180deg, rgba(232, 243, 239, 0.9) 0%, rgba(245, 247, 246, 1) 34%),
+        var(--bg);
+      font-family: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
+      line-height: 1.75;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration-thickness: 0.08em;
+      text-underline-offset: 0.2em;
+    }
+
+    .page {
+      width: min(calc(100% - 28px), var(--max));
+      margin: 0 auto;
+      padding: 18px 0 72px;
+    }
+
+    .hero,
+    .panel,
+    .question-card,
+    .result-panel {
+      background: rgba(255, 255, 255, 0.96);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .hero {
+      border-radius: 28px;
+      padding: 34px 22px 24px;
+      margin: 10px 0 18px;
+      overflow: hidden;
+    }
+
+    .eyebrow {
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+      margin: 0 0 8px;
+    }
+
+    h1 {
+      margin: 0;
+      font-family: "Yu Mincho", "Hiragino Mincho ProN", serif;
+      font-size: clamp(34px, 8vw, 54px);
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 16px 0 0;
+      color: var(--sub);
+      font-size: 15px;
+    }
+
+    .intro-grid {
+      display: grid;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .note {
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--line);
+      padding: 14px;
+      background: var(--paper-soft);
+    }
+
+    .note strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .note p {
+      margin: 0;
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .scale-guide {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 6px;
+      margin-top: 18px;
+    }
+
+    .scale-guide span {
+      min-height: 48px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      padding: 7px 5px;
+      color: var(--sub);
+      font-size: 11px;
+      line-height: 1.35;
+      text-align: center;
+    }
+
+    .scale-guide b {
+      display: block;
+      color: var(--green);
+      font-size: 15px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .panel {
+      border-radius: var(--radius);
+      padding: 18px;
+      margin: 18px 0;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 20px;
+      line-height: 1.35;
+      letter-spacing: 0;
+    }
+
+    .progress-text {
+      flex: 0 0 auto;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .questions {
+      display: grid;
+      gap: 12px;
+    }
+
+    .question-card {
+      border-radius: 16px;
+      padding: 16px;
+    }
+
+    .q-top {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .q-no {
+      display: inline-grid;
+      place-items: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-weight: 800;
+      font-size: 13px;
+    }
+
+    .q-text {
+      margin: 0;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.7;
+    }
+
+    .value-badge {
+      min-width: 42px;
+      height: 34px;
+      border-radius: 999px;
+      display: inline-grid;
+      place-items: center;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 17px;
+    }
+
+    .slider-wrap {
+      margin-top: 14px;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 34px;
+      margin: 0;
+      accent-color: var(--green);
+      cursor: pointer;
+      direction: rtl;
+    }
+
+    .range-labels,
+    .range-numbers {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 4px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .range-numbers {
+      margin-top: 2px;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .range-labels {
+      margin-top: 4px;
+      font-size: 10px;
+      line-height: 1.25;
+    }
+
+    .actions {
+      position: sticky;
+      bottom: 0;
+      z-index: 3;
+      margin: 18px -14px 0;
+      padding: 12px 14px calc(12px + env(safe-area-inset-bottom));
+      background: rgba(245, 247, 246, 0.88);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid rgba(199, 210, 206, 0.7);
+    }
+
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+      width: min(100%, var(--max));
+      margin: 0 auto;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      min-height: 50px;
+      padding: 0 18px;
+      font: inherit;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .primary {
+      background: var(--green);
+      color: #fff;
+      box-shadow: 0 10px 22px rgba(37, 107, 90, 0.24);
+    }
+
+    .secondary {
+      border: 1px solid var(--line-strong);
+      background: #fff;
+      color: var(--sub);
+    }
+
+    .result-panel {
+      display: none;
+      border-radius: var(--radius);
+      padding: 22px 18px;
+      margin-top: 18px;
+      box-shadow: var(--shadow);
+    }
+
+    .result-panel.is-visible {
+      display: block;
+    }
+
+    .result-kicker {
+      margin: 0 0 6px;
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .result-title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.35;
+    }
+
+    .result-summary {
+      margin: 12px 0 0;
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .score-grid {
+      display: grid;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .score-card {
+      position: relative;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--paper-soft);
+      padding: 14px;
+    }
+
+    .score-card.is-main {
+      border-color: var(--red);
+      border-width: 2px;
+      background: var(--amber-soft);
+      box-shadow: 0 0 0 3px var(--red-soft);
+    }
+
+    .main-badge {
+      display: inline-flex;
+      align-items: center;
+      width: fit-content;
+      margin-bottom: 8px;
+      border-radius: 999px;
+      background: var(--red);
+      color: #fff;
+      padding: 3px 9px;
+      font-size: 12px;
+      font-weight: 900;
+      line-height: 1.3;
+    }
+
+    .score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .score-name {
+      font-weight: 800;
+      font-size: 15px;
+    }
+
+    .score-value {
+      color: var(--green);
+      font-weight: 900;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .score-meter {
+      position: relative;
+      height: 8px;
+      margin-top: 10px;
+      border-radius: 999px;
+      overflow: hidden;
+      background: #e7ecea;
+    }
+
+    .score-meter span {
+      display: block;
+      height: 100%;
+      width: var(--w);
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--red), var(--amber), var(--green));
+    }
+
+    .result-copy {
+      margin-top: 18px;
+      display: grid;
+      gap: 12px;
+    }
+
+    .result-copy article {
+      border-left: 4px solid var(--green);
+      background: var(--green-soft);
+      border-radius: 0 12px 12px 0;
+      padding: 12px 14px;
+    }
+
+    .result-copy article.is-main {
+      border-left-color: var(--amber);
+      background: var(--amber-soft);
+    }
+
+    .result-copy h3 {
+      margin: 0 0 4px;
+      font-size: 15px;
+    }
+
+    .result-copy p {
+      margin: 0;
+      color: var(--sub);
+      font-size: 14px;
+    }
+
+    .source {
+      margin: 20px 4px 0;
+      color: var(--muted);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    @media (min-width: 720px) {
+      .page {
+        padding-top: 30px;
+      }
+
+      .hero {
+        padding: 48px;
+      }
+
+      .intro-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .panel,
+      .result-panel {
+        padding: 26px;
+      }
+
+      .questions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .question-card {
+        padding: 18px;
+      }
+
+      .score-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .actions {
+        border-radius: 22px;
+        border: 1px solid rgba(199, 210, 206, 0.7);
+        box-shadow: var(--shadow-soft);
+        margin: 24px 0 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="hero" aria-labelledby="title">
+      <p class="eyebrow">Communication Attractiveness Test</p>
+      <h1 id="title">魅力度テスト</h1>
+      <p class="lead">
+        人とのやり取りで自分らしさを出せているか、感情を扱えているか、相手への姿勢が保てているかを振り返るための簡易チェックです。
+      </p>
+
+      <div class="intro-grid" aria-label="受け方">
+        <div class="note">
+          <strong>受ける前に</strong>
+          <p>仕事やプライベートで、あなたが少し苦手だと感じるコミュニケーション場面を1つ思い浮かべてください。</p>
+        </div>
+        <div class="note">
+          <strong>採点のしかた</strong>
+          <p>深く考えすぎず、直感で1〜5点を選びます。迷ったら「3」を選んでください。</p>
+        </div>
+      </div>
+
+      <div class="scale-guide" aria-label="採点基準">
+        <span><b>5</b>完全に<br>当てはまる</span>
+        <span><b>4</b>当てはまる</span>
+        <span><b>3</b>どちらとも<br>言えない</span>
+        <span><b>2</b>当てはまらない</span>
+        <span><b>1</b>まったく<br>当てはまらない</span>
+      </div>
+    </section>
+
+    <section class="panel" aria-labelledby="questions-title">
+      <div class="section-head">
+        <h2 id="questions-title">質問項目</h2>
+        <span class="progress-text"><span id="changedCount">0</span> / 18 調整済み</span>
+      </div>
+      <div id="questions" class="questions"></div>
+    </section>
+
+    <section id="result" class="result-panel" aria-live="polite" aria-labelledby="result-title">
+      <p class="result-kicker">採点結果</p>
+      <h2 id="result-title" class="result-title"></h2>
+      <p id="result-summary" class="result-summary"></p>
+      <div id="scoreGrid" class="score-grid"></div>
+      <div id="resultCopy" class="result-copy"></div>
+    </section>
+
+    <div class="actions" aria-label="操作">
+      <div class="button-row">
+        <button class="primary" type="button" id="scoreButton">採点・結果表示</button>
+        <button class="secondary" type="button" id="resetButton">リセット</button>
+      </div>
+    </div>
+
+    <p class="source">
+      参考文献：
+      <a href="https://openstg-ecs.valuebooks.jp/%E6%9C%80%E5%BC%B7%E3%81%AE%E3%82%B3%E3%83%9F%E3%83%A5%E5%8A%9B%E3%81%AE%E3%81%A4%E3%81%8F%E3%82%8A%E3%81%8B%E3%81%9F/bp/VS0089737367" target="_blank" rel="noopener noreferrer">【最強のコミュ力のつくりかた】鈴木祐 著</a>
+    </p>
+  </main>
+
+  <script>
+    const questions = [
+      "人の前だろうが、なんの抵抗もなく自由に感じたままを言うことができる。",
+      "他人の話に疑問を感じたら、その気持ちをはっきり伝えられる。",
+      "自分にとって嫌なことを理解しているため、不快なことを引き受けて後悔することはない。",
+      "誰かに欠点を指摘されたり、親しい人と意見が異なったりしても、なかったことにはしない。",
+      "自分の深いところにある考えや感情を、よく理解できている。",
+      "本当は楽しくないのに、楽しいふりをしたりはしない。",
+      "色々と心配なことが頭に浮かんでも、会話から注意がそれることはない。",
+      "嘲笑や軽口を受けても、不快さを調整できる。",
+      "たくさんの人がいる部屋に入っても、他人の視線を感じて自意識過剰にはならない。",
+      "その場に合わないことを言うことはほとんどない。",
+      "まわりから下に見られていると思うことはない。",
+      "会話の最中に頭が真っ白になることはほぼない。",
+      "不快な相手でも、皮肉を言ったり、馬鹿にすることはない。",
+      "自分の欲求を満たすために、他の人を操ろうとまではしない。",
+      "自分もあやまちがあれば簡単に認める。",
+      "他の人から「緊張せずに話せる」と言われる。",
+      "どちらかというと温厚で、人の気持ちを気にするほうだ。",
+      "他の人からの注目や特別な好意は期待しない。"
+    ];
+
+    const scoreGroups = [
+      {
+        id: "authenticity",
+        name: "嘘が多い",
+        indexes: [0, 1, 2, 3, 4, 5],
+        description: "この項目の合計が低い人は、自分の素を出すのが苦手で、そのせいでコミュニケーションがうまくいっていない可能性があります。該当する場合は、第1章のワークを中心に進めてください。"
+      },
+      {
+        id: "emotion",
+        name: "感情が幼い",
+        indexes: [6, 7, 8, 9, 10, 11],
+        description: "この項目の合計が低い人は、感情をコントロールするのが苦手で、そのせいでコミュニケーションがうまくいっていない可能性があります。該当する場合は、第2章のワークを中心に進めてください。"
+      },
+      {
+        id: "kindness",
+        name: "性格が悪い",
+        indexes: [12, 13, 14, 15, 16, 17],
+        description: "この項目の合計が低い人は、他者への優しさが少なく、そのせいでコミュニケーションがうまくいっていない可能性があります。該当する場合は、第3章のワークを中心に進めてください。"
+      }
+    ];
+
+    const labels = {
+      5: "完全に当てはまる",
+      4: "当てはまる",
+      3: "どちらとも言えない",
+      2: "当てはまらない",
+      1: "まったく当てはまらない"
+    };
+
+    const touched = new Set();
+    const questionsEl = document.getElementById("questions");
+    const changedCountEl = document.getElementById("changedCount");
+    const resultEl = document.getElementById("result");
+    const resultTitleEl = document.getElementById("result-title");
+    const resultSummaryEl = document.getElementById("result-summary");
+    const scoreGridEl = document.getElementById("scoreGrid");
+    const resultCopyEl = document.getElementById("resultCopy");
+
+    function escapeHtml(value) {
+      return String(value).replace(/[&<>"']/g, (character) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        "\"": "&quot;",
+        "'": "&#39;"
+      })[character]);
+    }
+
+    function renderQuestions() {
+      questionsEl.innerHTML = questions.map((text, index) => {
+        const number = index + 1;
+        return `
+          <article class="question-card">
+            <div class="q-top">
+              <span class="q-no">${number}</span>
+              <p class="q-text">${escapeHtml(text)}</p>
+              <span class="value-badge" id="value-${number}">3</span>
+            </div>
+            <div class="slider-wrap">
+              <input
+                type="range"
+                min="1"
+                max="5"
+                step="1"
+                value="3"
+                aria-label="質問${number}の点数"
+                data-index="${index}"
+              >
+              <div class="range-numbers" aria-hidden="true">
+                <span>5</span><span>4</span><span>3</span><span>2</span><span>1</span>
+              </div>
+              <div class="range-labels" aria-hidden="true">
+                <span>完全に<br>当てはまる</span>
+                <span>当てはまる</span>
+                <span>どちらとも<br>言えない</span>
+                <span>当てはまらない</span>
+                <span>まったく<br>当てはまらない</span>
+              </div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function values() {
+      return Array.from(document.querySelectorAll('input[type="range"]')).map((input) => Number(input.value));
+    }
+
+    function updateChangedCount() {
+      changedCountEl.textContent = touched.size;
+    }
+
+    function scoreAll() {
+      const currentValues = values();
+      const scores = scoreGroups.map((group) => ({
+        ...group,
+        score: group.indexes.reduce((sum, index) => sum + currentValues[index], 0)
+      }));
+      const highest = Math.max(...scores.map((item) => item.score));
+      const main = scores.filter((item) => item.score === highest);
+      renderResult(scores, main);
+    }
+
+    function renderResult(scores, main) {
+      const mainNames = main.map((item) => item.name).join("・");
+      resultTitleEl.textContent = `一番傾向が高いもの：${mainNames}`;
+      resultSummaryEl.textContent = "各傾向の点数は以下の通りです。点数が高いほど、その傾向が強く出ている可能性があります。";
+
+      scoreGridEl.innerHTML = scores.map((item) => {
+        const isMain = main.some((mainItem) => mainItem.id === item.id);
+        const width = `${Math.round((item.score / 30) * 100)}%`;
+        return `
+          <article class="score-card${isMain ? " is-main" : ""}">
+            ${isMain ? '<span class="main-badge">★ 主傾向</span>' : ""}
+            <div class="score-row">
+              <span class="score-name">${escapeHtml(item.name)}</span>
+              <span class="score-value">${item.score}点</span>
+            </div>
+            <div class="score-meter" aria-hidden="true"><span style="--w: ${width}"></span></div>
+          </article>
+        `;
+      }).join("");
+
+      resultCopyEl.innerHTML = scores.map((item) => {
+        const isMain = main.some((mainItem) => mainItem.id === item.id);
+        return `
+          <article class="${isMain ? "is-main" : ""}">
+            <h3>${escapeHtml(item.name)}</h3>
+            <p>${escapeHtml(item.description)}</p>
+          </article>
+        `;
+      }).join("");
+
+      resultEl.classList.add("is-visible");
+      resultEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    function resetAll() {
+      document.querySelectorAll('input[type="range"]').forEach((input) => {
+        input.value = "3";
+        document.getElementById(`value-${Number(input.dataset.index) + 1}`).textContent = "3";
+      });
+      touched.clear();
+      updateChangedCount();
+      resultEl.classList.remove("is-visible");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    renderQuestions();
+
+    questionsEl.addEventListener("input", (event) => {
+      const input = event.target.closest('input[type="range"]');
+      if (!input) return;
+
+      const number = Number(input.dataset.index) + 1;
+      const value = Number(input.value);
+      touched.add(number);
+      document.getElementById(`value-${number}`).textContent = value;
+      input.setAttribute("aria-valuetext", labels[value]);
+      updateChangedCount();
+    });
+
+    document.getElementById("scoreButton").addEventListener("click", scoreAll);
+    document.getElementById("resetButton").addEventListener("click", resetAll);
+  </script>
+</body>
+</html>
