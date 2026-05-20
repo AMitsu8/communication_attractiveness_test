@@ -129,6 +129,28 @@
       font-size: 14px;
     }
 
+    .pre-result-note {
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--amber);
+      background: var(--amber-soft);
+      padding: 14px 16px;
+      margin: 18px 0 0;
+    }
+
+    .pre-result-note strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--ink);
+      font-size: 14px;
+    }
+
+    .pre-result-note p {
+      margin: 0;
+      color: var(--sub);
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
     .scale-guide {
       display: grid;
       grid-template-columns: repeat(5, 1fr);
@@ -529,6 +551,11 @@
       <div id="resultCopy" class="result-copy"></div>
     </section>
 
+    <div class="pre-result-note" role="note" aria-label="結果の読み方">
+      <strong>結果の読み方について</strong>
+      <p>結果には、参考書籍で使われている「嘘が多い」「感情が幼い」「性格が悪い」という刺激の強い言葉が出ます。初めて聞くと少しびっくりするかもしれませんが、「人としてダメ」という意味ではありません。自分を守ろうとする、本音を隠す、感情が先に出る、相手を値踏みしてしまうなど、人の心の動きを理解する材料として受け取ってください。</p>
+    </div>
+
     <div class="actions" aria-label="操作">
       <div class="button-row">
         <button class="primary" type="button" id="scoreButton">採点・結果表示</button>
@@ -569,19 +596,19 @@
         id: "authenticity",
         name: "嘘が多い",
         indexes: [0, 1, 2, 3, 4, 5],
-        description: "この項目の合計が低い人は、自分の素を出すのが苦手で、そのせいでコミュニケーションがうまくいっていない可能性があります。該当する場合は、第1章のワークを中心に進めてください。"
+        description: "この傾向が強く出ている人は、自分の素を出すのが苦手で、そのせいでコミュニケーションがうまくいっていない可能性があります。該当する場合は、第1章のワークを中心に進めてください。"
       },
       {
         id: "emotion",
         name: "感情が幼い",
         indexes: [6, 7, 8, 9, 10, 11],
-        description: "この項目の合計が低い人は、感情をコントロールするのが苦手で、そのせいでコミュニケーションがうまくいっていない可能性があります。該当する場合は、第2章のワークを中心に進めてください。"
+        description: "この傾向が強く出ている人は、感情をコントロールするのが苦手で、そのせいでコミュニケーションがうまくいっていない可能性があります。該当する場合は、第2章のワークを中心に進めてください。"
       },
       {
         id: "kindness",
         name: "性格が悪い",
         indexes: [12, 13, 14, 15, 16, 17],
-        description: "この項目の合計が低い人は、他者への優しさが少なく、そのせいでコミュニケーションがうまくいっていない可能性があります。該当する場合は、第3章のワークを中心に進めてください。"
+        description: "この傾向が強く出ている人は、他者への優しさが少なく、そのせいでコミュニケーションがうまくいっていない可能性があります。該当する場合は、第3章のワークを中心に進めてください。"
       }
     ];
 
