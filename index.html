@@ -697,7 +697,7 @@
     function renderResult(scores, main) {
       const mainNames = main.map((item) => item.name).join("・");
       resultTitleEl.textContent = `一番低いもの：${mainNames}`;
-      resultSummaryEl.textContent = "各傾向の点数は以下の通りです。点数が低いほど、その能力が低めと考えます。";
+      resultSummaryEl.textContent = "各傾向の点数は以下の通りです。点数が低いほど、その傾向が強く出ている可能性があります。";
 
       scoreGridEl.innerHTML = scores.map((item) => {
         const isMain = main.some((mainItem) => mainItem.id === item.id);
